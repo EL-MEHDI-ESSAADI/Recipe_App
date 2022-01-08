@@ -1,0 +1,418 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+/* ------------------- */
+/* Custom properties   */
+/* ------------------- */
+/* ------------------- */
+/* reset classes     */
+/* ------------------- */
+/* Box sizing */
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  display: block;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  background-color: initial;
+}
+
+:not(img)::-moz-selection {
+  background-color: hsl(270deg 50% 40% / 83%);
+  color: white;
+}
+
+:not(img)::selection {
+  background-color: hsl(270deg 50% 40% / 83%);
+  color: white;
+}
+
+img::-moz-selection {
+  background-color: transparent;
+}
+
+img::selection {
+  background-color: transparent;
+}
+
+/* set up the body */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-image: -webkit-gradient(linear, left top, right top, from(#ffffff), to(#ece9e6));
+  background-image: linear-gradient(to right, #ffffff, #ece9e6);
+  min-height: 100vh;
+  overflow-x: hidden;
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+  position: relative;
+  line-height: 1.4;
+}
+
+/* make images easier to work with */
+img,
+picutre {
+  max-width: 100%;
+  display: block;
+}
+
+/* make form elements easier to work with */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+svg {
+  display: block;
+}
+
+/* remove animations for people who've turned them off */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    -webkit-animation-duration: 0.01ms !important;
+            animation-duration: 0.01ms !important;
+    -webkit-animation-iteration-count: 1 !important;
+            animation-iteration-count: 1 !important;
+    -webkit-transition-duration: 0.01ms !important;
+            transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ------------------- */
+/* Utility classes     */
+/* ------------------- */
+.flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: var(--flex-gap, 1rem);
+}
+
+.grid {
+  display: -ms-grid;
+  display: grid;
+  gap: var(--grid-gap, 1rem);
+}
+
+.d-block {
+  display: block;
+}
+
+.flow > *:where(:not(:first-child)) {
+  margin-top: var(--flow-space, 1rem);
+}
+
+.skip-to-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background: white;
+  color: hsl( var(--clr-dark) );
+  padding: 0.5em 1em;
+  -webkit-transform: translateY(-100%);
+          transform: translateY(-100%);
+  -webkit-transition: -webkit-transform 250ms ease-in;
+  transition: -webkit-transform 250ms ease-in;
+  transition: transform 250ms ease-in;
+  transition: transform 250ms ease-in, -webkit-transform 250ms ease-in;
+}
+
+.skip-to-content:focus {
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+}
+
+.github-corner {
+  border-bottom: 0;
+  position: fixed;
+  right: 0;
+  text-decoration: none;
+  top: 0;
+  z-index: 1;
+  display: none;
+}
+
+@media (min-width: 35em) {
+  .github-corner {
+    display: block;
+  }
+}
+
+.github-corner:hover .octo-arm {
+  -webkit-animation: octocat-wave 560ms ease-in-out;
+  animation: octocat-wave 560ms ease-in-out;
+}
+
+.github-corner svg {
+  color: #fff;
+  fill: black;
+  height: 80px;
+  width: 80px;
+}
+
+@-webkit-keyframes octocat-wave {
+  0%,
+  100% {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+  }
+  20%,
+  60% {
+    -webkit-transform: rotate(-25deg);
+            transform: rotate(-25deg);
+  }
+  40%,
+  80% {
+    -webkit-transform: rotate(10deg);
+            transform: rotate(10deg);
+  }
+}
+
+@keyframes octocat-wave {
+  0%,
+  100% {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+  }
+  20%,
+  60% {
+    -webkit-transform: rotate(-25deg);
+            transform: rotate(-25deg);
+  }
+  40%,
+  80% {
+    -webkit-transform: rotate(10deg);
+            transform: rotate(10deg);
+  }
+}
+
+.CreaterLogo {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  width: 70px;
+  z-index: 10000;
+}
+
+.mainContent {
+  width: min(100%, 25rem);
+  margin: auto;
+  background-color: white;
+  -webkit-box-shadow: 0 0 10px 2px #3333331a;
+          box-shadow: 0 0 10px 2px #3333331a;
+}
+
+.mainContent .pageHeader {
+  padding-block: 1rem;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.mainContent .pageHeader input {
+  border: none;
+  background-color: #eee;
+  border-radius: 3px;
+  padding: 0.5rem 1rem;
+}
+
+.mainContent .pageHeader button {
+  width: 24px;
+}
+
+.mainContent .pageHeader button svg {
+  color: #8a818d;
+}
+
+.mainContent .fovriteMeals {
+  background-color: #f3e1ff;
+  padding: 0.5rem 1rem 1.5rem;
+}
+
+.mainContent .fovriteMeals header {
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.17rem;
+  margin-block: 1.2rem;
+}
+
+.mainContent .fovriteMeals ul {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  min-height: 99.5px;
+}
+
+.mainContent .fovriteMeals ul li {
+  width: 4.375rem;
+  position: relative;
+}
+
+.mainContent .fovriteMeals ul li img {
+  cursor: pointer;
+  border-radius: 50%;
+  border: 2px solid white;
+  -webkit-box-shadow: 0 0 10px 2px #3333331a;
+          box-shadow: 0 0 10px 2px #3333331a;
+  margin-block: .5rem 0.3rem;
+}
+
+.mainContent .fovriteMeals ul li figcaption {
+  max-width: 7ch;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 0.9rem;
+  margin: auto;
+}
+
+.mainContent .fovriteMeals ul li button {
+  width: 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  opacity: 0;
+}
+
+.mainContent .fovriteMeals ul li:hover button {
+  -webkit-transition: .3s ease-in-out;
+  transition: .3s ease-in-out;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  opacity: 1;
+}
+
+.mainContent .mealsContainer {
+  padding: 1.5rem 1.5rem 3rem;
+  --grid-gap: 1.5rem;
+}
+
+.mainContent .mealsContainer .meal {
+  border-radius: 3px;
+  -webkit-box-shadow: 0 0 10px 2px #3333331a;
+          box-shadow: 0 0 10px 2px #3333331a;
+  overflow: hidden;
+  position: relative;
+}
+
+.mainContent .mealsContainer .meal.random::before {
+  content: "Randome Recipe";
+  position: absolute;
+  z-index: 1;
+  display: block;
+  top: 1rem;
+  left: 0;
+  background-color: white;
+  padding: 0.4rem 1rem;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.mainContent .mealsContainer .meal .image {
+  width: 100%;
+  height: 250px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  cursor: pointer;
+  -webkit-transition: .4s ease-in-out;
+  transition: .4s ease-in-out;
+}
+
+.mainContent .mealsContainer .meal .image:hover {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+}
+
+.mainContent .mealsContainer .meal figcaption {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 1rem;
+  position: relative;
+  background-color: white;
+}
+
+.mainContent .mealsContainer .meal figcaption .title {
+  font-weight: 600;
+}
+
+.mainContent .mealsContainer .meal figcaption button.favorite svg {
+  fill: rebeccapurple !important;
+}
+
+.mainContent .mealInfo {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  z-index: 9999;
+  top: 0%;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.mainContent .mealInfo .mealInfoCon {
+  background-color: white;
+  width: min(600px, 100%);
+  height: 100%;
+  margin: auto;
+  overflow-y: auto;
+  border-radius: 5px;
+  padding: 1rem 2rem;
+  position: relative;
+}
+
+.mainContent .mealInfo .mealInfoCon .closeInfo {
+  position: absolute;
+  right: 1.5rem;
+  top: 1.5rem;
+  width: 17px;
+}
+
+.mainContent .mealInfo .mealInfoCon > img {
+  -webkit-box-shadow: 0 0 10px 2px #3333331a;
+          box-shadow: 0 0 10px 2px #3333331a;
+  border-radius: 5px;
+}
+
+.mainContent .mealInfo .mealInfoCon .mealName {
+  margin-block: 1rem 1.5rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.mainContent .mealInfo .mealInfoCon .instructions {
+  margin-block: 1.2rem;
+  line-height: 1.5;
+}
+
+.mainContent .mealInfo .mealInfoCon .ingredients ul {
+  all: revert;
+}
+
+.mainContent .mealInfo .mealInfoCon .ingredients ul li {
+  line-height: 1.5;
+}
+/*# sourceMappingURL=main.css.map */
