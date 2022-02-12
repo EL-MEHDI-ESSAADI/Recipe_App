@@ -13,19 +13,27 @@ fetchUrl(
    ({ meals }) => {
       createMeals(meals, "random");
    }
-).catch(err => console.error(err));
+).catch(err => {
+   window.alert("request error")
+   console.error(err);
+});
 
 // add event listner to search button and input
 searchBtnEl.addEventListener("click", (_) => {
    let searchStr = searchInputEl.value;
    if (!searchStr) return;
    searchInputEl.value = "";
+   addlePreloader();
    fetchUrl(
       `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchStr}`,
       ({ meals }) => {
-         createMeals(meals, "", searchStr);
+         createMeals(meals, "", searchStr, true);
       }
-   ).catch(err => console.error(err));
+   ).catch(err => {
+      window.alert('request error');
+      removePreloader();
+      console.error(err);
+   });
 });
 
 searchInputEl.addEventListener("keydown", (e) => {
@@ -41,10 +49,13 @@ for (let key in favoriteMeals) {
 // functions
 
 // createMeals is a function that creat all meals elements
-function createMeals(meals, random = "", searchStr) {
+function createMeals(meals, random = "", searchStr, rmPre = false) {
+   // remove preloader
+   if(rmPre) removePreloader();
+
    // check if the meals is null
    if (!meals) {
-      window.alert(`there is no meals with "${searchStr}" name`);
+      setTimeout(_ =>window.alert(`there is no meals with "${searchStr}" name`),100)
       return;
    }
    // remove the mealsconEl template
@@ -157,13 +168,12 @@ function displayMealInfo(image, state = "normal") {
 // is a fetchUrl function makes requests
 async function fetchUrl(url = "", fun = (_) => {}) {
    let response = await fetch(url), data;
-   if(response.ok) {
-      data = await response.json();
-      fun(data);
-   }else {
+   if(!response.ok) {
       window.alert(`${response.status} request error`);
       throw new Error(`${response.status} request error`)
    }
+   data = await response.json();
+   fun(data);
 }
 
 // addToFavorite adds meal to favorite and  removeFromFavorite remove it from favorite
@@ -225,4 +235,19 @@ function removeFromFavorite(idMeal) {
       button.classList.remove("favorite");
       button.classList.add("normal");
    }
+}
+
+function addlePreloader() {
+   let preloaderEl = document.querySelector(".preloader");
+   if(!preloaderEl) {
+      preloaderEl = document.createElement("div");
+      preloaderEl.classList.add("preloader");
+      document.body.prepend(preloaderEl);
+   }
+}
+
+function removePreloader() {
+   let preloaderEl = document.querySelector(".preloader");
+   if(preloaderEl) preloaderEl.remove() ;
+
 }

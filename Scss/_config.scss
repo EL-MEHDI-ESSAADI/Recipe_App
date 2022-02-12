@@ -182,3 +182,12 @@ svg {
 }
 
 
+.preloader {
+   inset: 0;
+   position: fixed;
+   background: transparent;
+   z-index: 1000;
+   background: url(../assets/preloader.svg) no-repeat center #0000006b;
+}
+
+

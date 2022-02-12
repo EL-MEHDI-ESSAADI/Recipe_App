@@ -4,13 +4,13 @@
       <meta charset="UTF-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>All Recipes</title>
+      <title>Recipe</title>
       <!-- website icon -->
-      <link rel="shortcut icon" href="" type="image/x-icon" />
-      <link rel="icon" href="" type="image/x-icon" sizes="192x192" />
+      <link rel="shortcut icon" href="./assets/recipe-icon.svg" type="image/x-icon" />
+      <link rel="icon" href="./assets/recipe-icon.svg" type="image/x-icon" sizes="192x192" />
       <link
          rel="appel-touch-icon"
-         href=""
+         href="./assets/recipe-icon.svg"
          type="image/x-icon"
          sizes="180x180"
       />
@@ -27,7 +27,7 @@
       <!-- start a link to the project on github -->
       <a
          title="View source on Github"
-         href="#"
+         href="https://github.com/Von-mehdi/Recipe_App"
          target="_blank"
          class="github-corner"
          aria-label="View source on Github"
@@ -46,7 +46,6 @@
             ></path></svg
       ></a>
       <!-- end a link to the project on github -->
-
       <!-- start main Content -->
       <main class="mainContent" id="main">
          <header class="pageHeader flex">
@@ -74,24 +73,10 @@
             <ul class="FavoriteMeilsContainer flex"></ul>
          </div>
          <div class="mealsContainer grid">
-            <div class="meal random">
+            <div class="meal random withPreloader">
                <figure>
                   <div class="image"></div>
-                  <figcaption class="flex">
-                     <div class="title">bob la dod</div>
-                     <button aria-label="add to favorite">
-                        <svg
-                           xmlns="http://www.w3.org/2000/svg"
-                           width="24"
-                           height="24"
-                           viewBox="0 0 24 24"
-                           style="fill: rgb(197, 188, 188)"
-                        >
-                           <path
-                              d="M12 4.248c-3.148-5.402-12-3.825-12 2.944 0 4.661 5.571 9.427 12 15.808 6.43-6.381 12-11.147 12-15.808 0-6.792-8.875-8.306-12-2.944z"
-                           />
-                        </svg>
-                     </button>
+                  <figcaption class="flex" style="height: 56px;">
                   </figcaption>
                </figure>
             </div>

@@ -213,6 +213,14 @@ svg {
   z-index: 10000;
 }
 
+.preloader {
+  inset: 0;
+  position: fixed;
+  background: transparent;
+  z-index: 1000;
+  background: url(../assets/preloader.svg) no-repeat center #0000006b;
+}
+
 .mainContent {
   width: min(100%, 25rem);
   margin: auto;
@@ -316,6 +324,10 @@ svg {
           box-shadow: 0 0 10px 2px #3333331a;
   overflow: hidden;
   position: relative;
+}
+
+.mainContent .mealsContainer .meal.withPreloader {
+  background: url(../assets/preloader.svg) no-repeat center;
 }
 
 .mainContent .mealsContainer .meal.random::before {
