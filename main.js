@@ -7,29 +7,34 @@ let normalMeals = {};
 let favoriteMeals;
 let allInfoEl = document.querySelector(".allInfo");
 
-
 // set the random recipe
-makeRequest("https://www.themealdb.com/api/json/v1/1/random.php", ({meals}) => {
-      createMeals(meals, "random");  
-});
+fetchUrl(
+   "https://www.themealdb.com/api/json/v1/1/random.php",
+   ({ meals }) => {
+      createMeals(meals, "random");
+   }
+).catch(err => console.error(err));
 
 // add event listner to search button and input
-searchBtnEl.addEventListener("click", _ => {
-   let searchStr = searchInputEl.value; 
-   if(!searchStr) return;
+searchBtnEl.addEventListener("click", (_) => {
+   let searchStr = searchInputEl.value;
+   if (!searchStr) return;
    searchInputEl.value = "";
-   makeRequest(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchStr}`, ({meals}) => {
+   fetchUrl(
+      `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchStr}`,
+      ({ meals }) => {
          createMeals(meals, "", searchStr);
-   });
+      }
+   ).catch(err => console.error(err));
 });
 
-searchInputEl.addEventListener("keydown", e => {
-   if(e.key === "Enter") searchBtnEl.click();
+searchInputEl.addEventListener("keydown", (e) => {
+   if (e.key === "Enter") searchBtnEl.click();
 });
 
-// get user favorite meals from local storage 
+// get user favorite meals from local storage
 favoriteMeals = JSON.parse(localStorage.getItem("favoriteMeals")) || {};
-for(let key in favoriteMeals) {
+for (let key in favoriteMeals) {
    addToFavorite(favoriteMeals[key], false);
 }
 
@@ -38,21 +43,21 @@ for(let key in favoriteMeals) {
 // createMeals is a function that creat all meals elements
 function createMeals(meals, random = "", searchStr) {
    // check if the meals is null
-   if(!meals) {
+   if (!meals) {
       window.alert(`there is no meals with "${searchStr}" name`);
-      return
-   };
+      return;
+   }
    // remove the mealsconEl template
    mealsConEl.innerHTML = "";
    // ceate meal elements
-   meals.forEach(meal => {
+   meals.forEach((meal) => {
       let mealEl = document.createElement("div");
       // know if this meal is one of the user favorites meals or just a norma meal
-      let mealType = favoriteMeals[meal.idMeal] ? "favorite": "normal";  
+      let mealType = favoriteMeals[meal.idMeal] ? "favorite" : "normal";
       normalMeals[meal.idMeal] = meal;
       mealEl.classList.add("meal");
       // add class random if the meal is randomly
-      if(random) mealEl.classList.add(random);
+      if (random) mealEl.classList.add(random);
 
       mealEl.innerHTML = `
       <figure >
@@ -74,12 +79,12 @@ function createMeals(meals, random = "", searchStr) {
             </button>
          </figcaption>
       </figure>
-      `
+      `;
       // set the functionality of desplaying meal info when we click on meal image
       displayMealInfo(mealEl.querySelector(".image"));
       // set the functionality of add the meal to favorite and remove from it, when we clicking on meal button
       mealEl.querySelector("button").addEventListener("click", function () {
-         if(this.classList.contains("normal")){
+         if (this.classList.contains("normal")) {
             addToFavorite(meal);
             this.classList.remove("normal");
             this.classList.add("favorite");
@@ -89,24 +94,28 @@ function createMeals(meals, random = "", searchStr) {
       });
       mealsConEl.append(mealEl);
    });
-};
+}
 
 /* displayMealInfo is a function that add a event click listner to meal image and when the event fire, meal information 
    will appear
 */
 function displayMealInfo(image, state = "normal") {
-   image.addEventListener("click", _ => {
+   image.addEventListener("click", (_) => {
       // set meal object depend of state, if it normal or favorite
-      let meal = state === "normal" ? normalMeals[image.dataset.idmeal]: favoriteMeals[image.dataset.idmeal];
+      let meal =
+         state === "normal"
+            ? normalMeals[image.dataset.idmeal]
+            : favoriteMeals[image.dataset.idmeal];
       let mealInfo = document.createElement("div");
       let ingridinetsLiS = "";
       // set all ingridinets in liS
       for (let i = 1; i <= 20; i++) {
-         if(meal[`strIngredient${i}`]) {
-            let value = meal[`strIngredient${i}`] + " - " + meal[`strMeasure${i}`] 
-            ingridinetsLiS += `<li> ${value} </li>` ;
+         if (meal[`strIngredient${i}`]) {
+            let value =
+               meal[`strIngredient${i}`] + " - " + meal[`strMeasure${i}`];
+            ingridinetsLiS += `<li> ${value} </li>`;
          }
-      };
+      }
       mealInfo.classList.add("mealInfo");
       mealInfo.innerHTML = `
       <div class="mealInfoCon">
@@ -136,47 +145,33 @@ function displayMealInfo(image, state = "normal") {
          </ul>
       </div>
    </div>
-      `
+      `;
       // remove the mealInfo if we click on close button
-      mealInfo.querySelector("button").addEventListener("click", _ => {
+      mealInfo.querySelector("button").addEventListener("click", (_) => {
          mealInfo.remove();
-      })
+      });
       allInfoEl.append(mealInfo);
    });
-
-
 }
 
-// is a makeRequest function makes requests
-function makeRequest(url="",fun= _ =>{}) {
-   let httpRequest;
-   if (window.XMLHttpRequest) { // Mozilla, Safari, IE7+ ...
-      httpRequest = new XMLHttpRequest();
-   } else if (window.ActiveXObject) { // IE 6 and older
-      httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+// is a fetchUrl function makes requests
+async function fetchUrl(url = "", fun = (_) => {}) {
+   let response = await fetch(url), data;
+   if(response.ok) {
+      data = await response.json();
+      fun(data);
+   }else {
+      window.alert(`${response.status} request error`);
+      throw new Error(`${response.status} request error`)
    }
-   // create one http request and set for it a event listner for statechanging
-   httpRequest = new XMLHttpRequest();
-   httpRequest.responseType = "json";
-   httpRequest.open('GET', `${url}`);
-   httpRequest.addEventListener("readystatechange", _ => {
-      if(httpRequest.readyState != XMLHttpRequest.DONE) return;
-      if(httpRequest.status != 200) {
-         // allert Request error we didn't receive data  
-         window.alert("Request error");
-         return
-      };
-      fun(httpRequest.response);
-   });
-   httpRequest.send();
 }
 
 // addToFavorite adds meal to favorite and  removeFromFavorite remove it from favorite
 
-function addToFavorite(meal, storage = true){
+function addToFavorite(meal, storage = true) {
    let li = document.createElement("li");
-   // check if we need to add the meal object to favoriteMeals obj and user local storage  
-   if(storage) {
+   // check if we need to add the meal object to favoriteMeals obj and user local storage
+   if (storage) {
       favoriteMeals[meal.idMeal] = meal;
       localStorage.setItem("favoriteMeals", JSON.stringify(favoriteMeals));
    }
@@ -206,17 +201,21 @@ function addToFavorite(meal, storage = true){
          />
       </svg>
    </button>
-   `
+   `;
    displayMealInfo(li.querySelector("img"), "favorote");
    // add event listner for "remove" button
-   li.querySelector("button").addEventListener("click", _ => removeFromFavorite(meal.idMeal));
+   li.querySelector("button").addEventListener("click", (_) =>
+      removeFromFavorite(meal.idMeal)
+   );
    FavMealsCon.append(li);
 }
 
 function removeFromFavorite(idMeal) {
    let favImageTarget = FavMealsCon.querySelector(`[data-idmeal="${idMeal}"]`);
-   let button = mealsConEl.querySelector(`[data-idmeal="${idMeal}"] ~ figcaption button`);
-   // delete meal from all favoriteMeals obj and user local storage 
+   let button = mealsConEl.querySelector(
+      `[data-idmeal="${idMeal}"] ~ figcaption button`
+   );
+   // delete meal from all favoriteMeals obj and user local storage
    delete favoriteMeals[idMeal];
    localStorage.setItem("favoriteMeals", JSON.stringify(favoriteMeals));
    // remove favorite meal element if it exist
@@ -226,5 +225,4 @@ function removeFromFavorite(idMeal) {
       button.classList.remove("favorite");
       button.classList.add("normal");
    }
-   
-}; 
+}
