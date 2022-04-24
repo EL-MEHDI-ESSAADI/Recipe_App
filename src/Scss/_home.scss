@@ -1,0 +1,192 @@
+// page main content
+
+.mainContent {
+   width: #{"min(100%, 25rem)"};
+   margin: auto;
+   background-color: white;
+   box-shadow: 0 0 10px 2px #3333331a;
+
+   .pageHeader {
+      padding-block: 1rem;
+      justify-content: center;
+      input {
+         border: none;
+         background-color: #eee;
+         border-radius: 3px;
+         padding: 0.5rem 1rem;
+      }
+      button {
+         width: 24px;
+         svg {
+            color: rgb(138, 129, 141);
+         }
+      }
+   }
+
+   .fovriteMeals {
+      background-color: rgb(243, 225, 255);
+      padding: 0.5rem 1rem 1.5rem;
+
+      header {
+         text-align: center;
+         font-weight: 600;
+         font-size: 1.17rem;
+         margin-block: 1.2rem;
+      }
+
+      ul {
+         justify-content: center;
+         flex-wrap: wrap;
+         min-height: 99.5px;
+         li {
+            width: 4.375rem;
+            position: relative;
+            
+            img {
+               cursor: pointer;
+               border-radius: 50%;
+               border: 2px solid white;
+               box-shadow: 0 0 10px 2px #3333331a;
+               margin-block: .5rem 0.3rem;
+            }
+
+            figcaption {
+               max-width: 7ch;
+               text-overflow: ellipsis;
+               white-space: nowrap;
+               overflow: hidden;
+               font-size: 0.9rem;
+               margin: auto;
+            }
+
+            button {
+               width: 20px;
+               position: absolute;
+               top: 0;
+               right: 0;
+               transform: scale(0);
+               opacity: 0;
+            }
+            
+            &:hover button {
+               transition: .3s ease-in-out;
+                  transform: scale(1);
+                  opacity: 1;
+            }
+
+         }
+      }
+   }
+
+   .mealsContainer {
+      padding: 1.5rem 1.5rem 3rem;
+      --grid-gap: 1.5rem;
+
+      .meal {
+         border-radius: 3px;
+         box-shadow: 0 0 10px 2px #3333331a;
+         overflow: hidden;
+         position: relative;
+         &.withPreloader {
+            background: url(../assets/winter.gif) no-repeat center;
+         }
+         &.random::before {
+               content: "Randome Recipe";
+               position: absolute;
+               z-index: 1;
+               display: block;
+               top: 1rem;
+               left: 0;
+               background-color: white;
+               padding: 0.4rem 1rem;
+               border-top-right-radius: 3px;
+               border-bottom-right-radius: 3px;
+            }
+         
+         .image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: .4s ease-in-out;
+
+            &:hover {
+               transform: scale(1.05);
+            }
+         }
+         figcaption {
+            justify-content: space-between;
+            padding: 1rem;
+            position: relative;
+            background-color: white;
+
+            .title {
+               font-weight: 600;
+            }
+
+            button.favorite svg {
+               fill: rebeccapurple !important;
+            }
+         }
+
+      }
+   }
+
+   .mealInfo {
+      position: fixed;
+      width: 100%;
+      height: 100vh;
+      z-index: 9999;
+      top: 0%;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      
+      .mealInfoCon {
+         background-color: white;
+         width: #{"min(600px, 100%)"};
+         height: 100%;
+         margin: auto;
+         overflow-y: auto;
+         border-radius: 5px;
+         padding: 1rem 2rem;
+         position: relative;
+
+         .closeInfo {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            width: 17px;
+         }
+
+         & > img {
+            box-shadow: 0 0 10px 2px #3333331a;
+            border-radius: 5px;
+         }
+
+         .mealName {
+            margin-block: 1rem 1.5rem;
+            text-align: center;
+            font-weight: 600;
+         }
+
+         .instructions {
+            margin-block: 1.2rem;
+            line-height: 1.5;
+         }
+
+         .ingredients {
+
+            ul {
+               all: revert;
+
+               li {
+                  line-height: 1.5;
+               }
+            }
+         }
+      }
+   
+   }
+}
+
+
