@@ -1,6 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
-export default function Header(props) {
+function Header(props) {
    const [formData, setFormData] = useState(() => ({search: ""}));
 
    function hendelInputChange(e) {
@@ -27,3 +27,5 @@ export default function Header(props) {
       </header>
    );
 }
+
+export default React.memo(Header, (prevProps, newProps) => true)

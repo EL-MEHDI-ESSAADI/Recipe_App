@@ -1,7 +1,6 @@
 import FavoriteBox from "./FavoriteBox";
-
-export default function Favorites(props) {
-
+import React from "react";
+function Favorites(props) {
    const favoriteElements = props.favoriteMeals.map(meal => <FavoriteBox key={meal.idMeal} meal={meal} removeMealFromFavorites={props.removeMealFromFavorites} makeMealActive={props.makeMealActive}/>)
 
    return (
@@ -13,3 +12,5 @@ export default function Favorites(props) {
       </div>
    );
 }
+
+export default React.memo(Favorites, (prevProps, newProps) => prevProps.favoriteMeals === newProps.favoriteMeals)
