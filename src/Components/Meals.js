@@ -2,7 +2,6 @@ import Meal from "./Meal";
 import React from "react";
 
 function Meals({meals, addMealToFavorites, removeMealFromFavorites, makeMealActive}) {
-   console.log("meals render")
    const mealsElements = meals.map((meal) => (
       <Meal key={meal.idMeal} meal={meal} makeMealActive={makeMealActive} addMealToFavorites={addMealToFavorites} removeMealFromFavorites={removeMealFromFavorites}/>
    ));

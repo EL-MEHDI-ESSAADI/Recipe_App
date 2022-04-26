@@ -5,13 +5,14 @@ import Favorites from "./Components/Favorites";
 import Meals from "./Components/Meals";
 import MealInfo from "./Components/MealInfo";
 import * as thirdParty from "./modules/thirsParty";
-
+import Modal from "./Components/Modal";
 function App() {
    const [meals, setMeals] = useState([]);
    const [favoriteMeals, setFavoriteMeals] = useState(() => JSON.parse(localStorage.getItem("favorites")) || []);
    // active meal is the that currently the user exploring his details
    const [activeMeal, setActiveMeal] = useState(null);
-   const [isPreloaderOn, setIsPreloaderOn] = useState(false);
+   const [showPreloader, setShowPreloader] = useState(false);
+   const [pageModal, setPageModal] = useState(()=>({show: false, content: null}))
 
    // hendling localStorage
    useEffect(() => {
@@ -43,14 +44,14 @@ function App() {
 
    function searchForMeals(searchStr) {
       // add preloader
-      setIsPreloaderOn(true);
+      setShowPreloader(true);
       const endPoint = thirdParty.SEARCH_MEAL_API.replace("searchStr", searchStr);
       thirdParty.handelData(endPoint, ({ meals: mealsData }) => {
          // remove preloader
-         setIsPreloaderOn(false);
+         setShowPreloader(false);
          // check if mealsData is empty
          if (!mealsData) {
-            window.alert(`there is no meals with "${searchStr}" name`);
+            setPageModal({show: true, content: `There is no meals with "${searchStr}" name`})
             return;
          }
          // add  isFavorite property to mealsData"s elements
@@ -60,6 +61,10 @@ function App() {
          // update our meals state
          setMeals(mealsData);
       });
+   }
+
+   function closeModal() {
+      setPageModal({show: false, content: null})
    }
 
    return (
@@ -77,7 +82,8 @@ function App() {
             removeMealFromFavorites={removeMealFromFavorites}
          />
          {activeMeal && <MealInfo meal={activeMeal} closeMealInfo={() => setActiveMeal(null)} />}
-         {isPreloaderOn && <div className="preloader"></div>}
+         {showPreloader && <div className="preloader"></div>}
+         {pageModal.show && <Modal closeModal={closeModal} > {pageModal.content}</Modal>}
       </>
    );
 }

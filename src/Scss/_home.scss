@@ -155,7 +155,7 @@
             position: absolute;
             right: 1.5rem;
             top: 1.5rem;
-            width: 17px;
+            width: 24px;
          }
 
          & > img {
@@ -189,4 +189,41 @@
    }
 }
 
+.modal {
+   position: fixed;
+   inset: 0;
+   z-index: 1000;
+   display: grid;
+   place-items: center;
 
+   &__overlay {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background-color: black;
+      animation: showModalOverlay 0.2s ease-out  forwards;
+   }
+   &__content {
+      position: relative;
+      padding: 3rem;
+      border-radius: 5px;
+      background: aliceblue;
+   }
+   &__close-btn {
+      position: absolute;
+      top: 12px;
+      right: 10px;
+      width: 17px;
+   }
+}
+
+
+@keyframes showModalOverlay {
+   0% {
+      opacity: 0;
+   }
+   100% {
+      opacity: .21;
+   }
+   
+}
