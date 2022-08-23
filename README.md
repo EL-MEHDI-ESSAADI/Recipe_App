@@ -1,4 +1,4 @@
 # Get Recipe
-A recipe search web app
+A web app that lets you search for your desired recipe by the meal's name.
 ## Try It
 [Recipe App](https://get-recipe-now.netlify.app/)
